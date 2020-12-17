@@ -1,0 +1,10 @@
+alpha
+98
+bravo
+76
+charlie
+54
+delta
+32
+echo
+10

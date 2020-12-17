@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <signal.h>  
+
+static int dev;
+unsigned short button = 0;
+
+void my_signal_fun(int signum)  
+{  
+	read(dev,&button,2);
+	printf("%d\n",button); 
+} 
+
+int main(void){
+	
+	int Oflags;
+
+    	signal(SIGIO, my_signal_fun);
+	
+	dev = open("/dev/gpiobutton",O_RDWR);
+	if(dev < 0) {
+		printf( "Device Open ERROR!\n");
+		return -1;
+	}
+	printf("Please push the GPIO_0 port!\n");
+	//read(dev,&button,2);
+	//printf("%d\n",button);
+
+	fcntl(dev, F_SETOWN, getpid());  
+      
+        Oflags = fcntl(dev, F_GETFL);   
+
+        fcntl(dev, F_SETFL, Oflags | FASYNC); 
+	
+	while(1){
+		sleep(1);
+		printf("%d\n",button);
+		button = 0;
+	}
+	
+	close(dev);
+	return 0;
+}

@@ -1,0 +1,10 @@
+makefile에서 컴파일 프로그램은 compile 폴더에 첨부
+자신의 주소에서 첨부하기
+
+test 폴더에는 device 드라이버 예제 첨부
+project 폴더에는 프로젝트로 진행한 두더지 게임 코드와 데이터 첨부
+
+project 폴더의 kernel 내부에 있는 .ko 파일들을 모두 보드에서 insmod
+data 폴더와 alphabet 폴더에 있는 bmp 파일을 모두 보드에 전송
+src 폴더에서 make하여 실행파일 term_test 생성
+term_test을 보드에 전송한 후 실행
